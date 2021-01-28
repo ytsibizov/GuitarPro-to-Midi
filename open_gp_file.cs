@@ -14,10 +14,20 @@ using System.Xml.Linq;
     {
         if (args == null)
         {
+            Console.WriteLine("Usage: GuitarPro-to-Midi filename");
             return;
         }
 
+        if (args.Length != 1) {
+            Console.WriteLine("Usage: GuitarPro-to-Midi filename");
+            return;
+        }
         string fileName = args[0];
+
+        if (! File.Exists(fileName)){
+            Console.WriteLine("ERROR: file"+fileName+" not found");
+            return;
+        }
 
         byte[] bytes = File.ReadAllBytes(fileName);
         //Detect Version by Filename
