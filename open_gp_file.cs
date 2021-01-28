@@ -1,38 +1,28 @@
-﻿using SFB;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using UnityEngine;
 
 
-public class open_gp_file : MonoBehaviour {
-    public string Title = "";
-    public string FileName = "";
-    public string Directory = "";
-    public string Extension = "";
-    public bool Multiselect = false;
-
-    GPFile gpfile;
-
-    public void open_file_dialog()
+    class Program
     {
-        var paths = StandaloneFileBrowser.OpenFilePanel(Title, Directory, Extension, Multiselect);
-        if (paths.Length > 0)
+    static GPFile gpfile;
+
+    static void Main(string[] args)
+    {
+        if (args == null)
         {
-            StartCoroutine(OutputRoutine(new System.Uri(paths[0]).AbsoluteUri));
+            return;
         }
-    }
 
-    private IEnumerator OutputRoutine(string url)
-    {
-        var loader = new WWW(url);
-        yield return loader;
+        string fileName = args[0];
+
+        byte[] bytes = File.ReadAllBytes(fileName);
         //Detect Version by Filename
         int version = 7;
-        string fileEnding = Path.GetExtension(url);
+        string fileEnding = Path.GetExtension(fileName);
         if (fileEnding.Equals(".gp3")) version = 3;
         if (fileEnding.Equals(".gp4")) version = 4;
         if (fileEnding.Equals(".gp5")) version = 5;
@@ -43,25 +33,25 @@ public class open_gp_file : MonoBehaviour {
         switch (version)
         {
             case 3:
-                gpfile = new GP3File(loader.bytes);
+                gpfile = new GP3File(bytes);
                 gpfile.readSong();
                 break;
             case 4:
-                gpfile = new GP4File(loader.bytes);
+                gpfile = new GP4File(bytes);
                 gpfile.readSong();
                 break;
             case 5:
-                gpfile = new GP5File(loader.bytes);
+                gpfile = new GP5File(bytes);
                 gpfile.readSong();
                 
                 break;
             case 6:
-                gpfile = new GP6File(loader.bytes);
+                gpfile = new GP6File(bytes);
                 gpfile.readSong();
                 gpfile = gpfile.self; //Replace with transferred GP5 file
 
                 break;
-            case 7:
+/*            case 7:
                 string archiveName = url.Substring(8).Replace("%20"," ");
                 byte[] buffer = new byte[8200000];
                 MemoryStream stream = new MemoryStream(buffer);
@@ -80,12 +70,12 @@ public class open_gp_file : MonoBehaviour {
                     gpfile = gpfile.self; //Replace with transferred GP5 file
 
                 }
-                break;
+                break;*/
             default:
-                Debug.Log("Unknown File Format");
+                Console.WriteLine("Unknown File Format");
                 break;
         }
-        Debug.Log("Done");
+        Console.WriteLine("Done");
 
         var song = new Native.NativeFormat(gpfile);
         var midi = song.toMidi();
@@ -115,23 +105,4 @@ public class open_gp_file : MonoBehaviour {
          */
 
     }
-
-    private static void ListFiles(Unzip unzip)
-    {
-        var tab = unzip.Entries.Any(e => e.IsDirectory) ? "\t" : string.Empty;
-
-        foreach (var entry in unzip.Entries.OrderBy(e => e.Name))
-        {
-            if (entry.IsFile)
-            {
-                //Debug.Log(tab + entry.Name+": "+ entry.CompressedSize + " -> "+ entry.OriginalSize);
-                continue;
-            }
-
-            //Debug.Log(entry.Name);
-        }
-
-        //Debug.Log("");
-    }
-
 }
