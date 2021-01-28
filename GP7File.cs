@@ -4,7 +4,6 @@ using System.Collections.Generic;
 public class GP7File : GPFile {
 
     static string xml;
-    public List<Track> tracks;
 
     public GP7File(string data)
     {
