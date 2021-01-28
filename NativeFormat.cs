@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Native { 
     public class NativeFormat  {
@@ -1070,8 +1069,8 @@ namespace Native {
 
                 if (n.str == -2) break; //Last round
                 
-                if (n.str-1 < 0) Debug.Log("String was -1");
-                if (n.str-1 >= tuning.Length && tuning.Length != 0) Debug.Log("String was higher than string amount (" + n.str + ")");
+                if (n.str-1 < 0) Console.WriteLine("String was -1");
+                if (n.str-1 >= tuning.Length && tuning.Length != 0) Console.WriteLine("String was higher than string amount (" + n.str + ")");
                 if (tuning.Length > 0) note = tuning[n.str - 1] + capo + n.fret;
                 else
                 {

@@ -1,11 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class GP7File : GPFile {
 
     static string xml;
-    public List<Track> tracks;
 
     public GP7File(string data)
     {

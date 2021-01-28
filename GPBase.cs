@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 abstract public class GPFile
 {
@@ -153,15 +152,19 @@ public class GPBase
     {
        if (length <= 0)
         {  
-            return new byte[Math.Max(0, length)];
+            return new byte[0];
         }
-        if (length + start > data.Length)
+        if (start > data.Length)
         {
-            return new byte[Math.Max(0, length)];
-            return null;
+            return new byte[0];
         }
 
-            byte[] ret = new byte[length];
+        if (length + start > data.Length)
+        {
+            length = data.Length - start;  // read till end
+        }
+
+        byte[] ret = new byte[length];
         for (int x = start; x < start + length; x++)
         {
             ret[x - start] = data[x];
