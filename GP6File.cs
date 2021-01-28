@@ -155,10 +155,6 @@ public class GP6File : GPFile
             _bar.header = song.measureHeaders[barCnt];
             currentMeasure = barCnt;
             currentTrack = cnt % song.trackCount;
-            if (currentTrack == 9)
-            {
-                int a = 3;
-            }
             cnt++;
             Node nSimileMark = nBar.getSubnodeByName("SimileMark", true);
             if (nSimileMark != null)
