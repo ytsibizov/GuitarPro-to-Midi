@@ -925,13 +925,13 @@ public class GP5File : GPFile
         - *6*: quarter*/
         switch (value)
         {
-            case 1: return Duration.hundredTwentyEigth; break;
-            case 2: return Duration.sixtyFourth; break;
-            case 3: return Duration.thirtySecond; break;
-            case 4: return Duration.sixteenth; break;
-            case 5: return Duration.eigth; break;
-            case 6: return Duration.quarter; break;
-            default: return Duration.sixtyFourth; break;
+            case 1: return Duration.hundredTwentyEigth;
+            case 2: return Duration.sixtyFourth;
+            case 3: return Duration.thirtySecond;
+            case 4: return Duration.sixteenth;
+            case 5: return Duration.eigth;
+            case 6: return Duration.quarter;
+            default: return Duration.sixtyFourth;
         }
     }
 
@@ -1602,7 +1602,7 @@ public class GP5File : GPFile
         /*Read lyrics.
         First, read an :ref:`int` that points to the track lyrics are
         bound to. Then it is followed by 5 lyric lines. Each one
-        constists of number of starting measure encoded in :ref:`int`
+        consists of number of starting measure encoded in :ref:`int`
         and :ref:`int-size-string` holding text of the lyric line.*/
 
         var _lyrics = new Lyrics();
