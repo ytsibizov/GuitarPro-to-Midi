@@ -556,8 +556,8 @@ namespace Native {
                                 note.duration /= 2;
                                 note.resizeValue *= ((float)note.duration / orig);
                             }
-                            if (n.effect.accentuatedNote) note.velocity = (int)(note.velocity * 1.2f);
-                            if (n.effect.heavyAccentuatedNote) note.velocity = (int)(note.velocity * 1.4f);
+                            if (n.effect.accentuatedNote) note.velocity = Math.Min(127, (int)(note.velocity * 1.2f));
+                            if (n.effect.heavyAccentuatedNote) note.velocity = Math.Min(127, (int)(note.velocity * 1.4f));
                             
                             //Arpeggio / Brush
                             if (hasBrush)
@@ -667,7 +667,7 @@ namespace Native {
             int version = file.versionTuple[0];
             if (version < 4) //Look at MeasureHeaders
             {
-                //Get inital tempo from file header
+                //Get initial tempo from file header
                 Tempo init = new Tempo();
                 init.position = 0;
                 init.value = file.tempo;
@@ -689,7 +689,7 @@ namespace Native {
             {
                 int pos = 0;
 
-                //Get inital tempo from file header
+                //Get initial tempo from file header
                 Tempo init = new Tempo();
                 init.position = 0;
                 init.value = file.tempo;
